@@ -1,0 +1,48 @@
+{
+    "name": "Hafiz Ibrahim",
+    "discordGist": "https://gist.githubusercontent.com/HafizIbrahimSuriya/797066fc293f61d8592d835acc97ff9e/raw",
+    "links": [
+        {
+            "id": "x",
+            "label": "X",
+            "handle": "@HafizIbrahimDev",
+            "url": "https://x.com/HafizIbrahimDev"
+        },
+        {
+            "id": "tiktok",
+            "label": "TikTok",
+            "handle": "@HafizIbrahimSuriya",
+            "url": "https://www.tiktok.com/@HafizIbrahimSuriya"
+        },
+        {
+            "id": "instagram",
+            "label": "Instagram",
+            "handle": "@HafizIbrahimSuriya",
+            "url": "https://www.instagram.com/HafizIbrahimSuriya"
+        },
+        {
+            "id": "threads",
+            "label": "Threads",
+            "handle": "@HafizIbrahimSuriya",
+            "url": "https://www.threads.net/@HafizIbrahimSuriya"
+        },
+        {
+            "id": "linkedin",
+            "label": "LinkedIn",
+            "handle": "HafizIbrahimSuriya",
+            "url": "https://www.linkedin.com/in/HafizIbrahimSuriya"
+        },
+        {
+            "id": "youtube",
+            "label": "YouTube",
+            "handle": "@HafizIbrahimSuriya",
+            "url": "https://www.youtube.com/@HafizIbrahimSuriya"
+        },
+        {
+            "id": "github",
+            "label": "GitHub",
+            "handle": "HafizIbrahimSuriya",
+            "url": "https://github.com/HafizIbrahimSuriya"
+        }
+    ]
+}

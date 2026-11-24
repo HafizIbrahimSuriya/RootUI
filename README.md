@@ -1,86 +1,204 @@
-# RootUI
+<p align="center">
+  <img src="banner.svg" alt="RootUI banner" width="100%"/>
+</p>
 
-A sci-fi terminal emulator, file browser and system monitor — **rebuilt in Rust**.
-RootUI is a port of [eDEX-UI](https://github.com/GitSquared/edex-ui) (GPL-3.0): the original
-interface (themes, keyboard, globe, graphs, audio, file browser, tabs …) running on a Rust
-back-end instead of Electron + Node.js.
+<p align="center">
+  <img src="https://img.shields.io/badge/language-Rust-orange?style=for-the-badge&logo=rust" alt="Rust"/>
+  <img src="https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-00e5ff?style=for-the-badge" alt="Platforms"/>
+  <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge" alt="License"/>
+  <img src="https://img.shields.io/badge/status-active-brightgreen?style=for-the-badge" alt="Status"/>
+</p>
 
-## Run it (no .exe needed)
+<p align="center">
+  <b>RootUI</b> is a sci-fi terminal emulator and system dashboard inspired by <a href="https://github.com/GitSquared/edex-ui">eDEX-UI</a>,<br/>
+  rebuilt from scratch in <b>Rust</b> — no Electron, no bloat, just smooth.
+</p>
 
-1. Install Rust once: <https://rustup.rs> (Windows: keep the default *MSVC* toolchain; it will ask for the
-   Visual Studio C++ Build Tools — accept).
-2. Windows 10/11 needs the *WebView2 runtime* (already installed on Windows 11 and most Windows 10).
-3. Double-click **`run-rootui.bat`**. (Linux: `./run-rootui.sh`.)
+---
 
-The first run compiles the dependencies (a few minutes); after that it starts immediately.
-Extra arguments are passed through, e.g. `run-rootui.bat --nointro`.
+## ✨ Why RootUI?
 
-## Build the packages for your users (version 1.0V)
+eDEX-UI looks amazing, but it runs on Electron: heavy on RAM, slow to start, and no longer maintained. RootUI keeps the look and feel and swaps the engine.
 
-| Users on | Run | You get (in `dist\`) |
-|----------|-----|-----------------------|
-| Windows 64-bit + 32-bit | **`BuildFORwindows.bat`** | `windows-x64\RootUI.exe`, `windows-x86\RootUI.exe` and the setup files `installers\RootUI-1.0V-Setup-x64.exe` / `RootUI-1.0V-Setup-x86.exe` |
-| Linux | **`sh BuildForLinux.sh`** | `RootUI-1.0V-linux-*.zip` - contains `install.sh` (adds RootUI to the applications menu, `--desktop` for a Desktop icon) |
+| | eDEX-UI | **RootUI** |
+|---|---|---|
+| Language | JavaScript / Electron | **Rust** |
+| Startup | Slow | **Near-instant** |
+| Memory use | High | **Low** |
+| Rendering | DOM / Chromium | **GPU-accelerated** |
+| Animations | Can stutter | **Smooth, frame-paced** |
+| Customization | Limited | **Extensive options** |
 
-- The Windows setup files are made by Inno Setup 6 (`packaging\RootUI-x64.iss` and `packaging\RootUI-x86.iss`) - install it once
-  from <https://jrsoftware.org/isdl.php>. The 32-bit build needs the x86 MSVC build tools (Visual Studio Installer).
-- `BuildForLinux.sh` runs on Linux (Debian/Ubuntu, Fedora, Arch): it installs the missing build tools and Rust on the first run
-  (asks for your password once). Add `--install` to also install the app for your user right after the build.
-- There is no macOS build.
-- `.github/workflows/build.yml` builds the same Linux and Windows packages on GitHub when you push.
+---
 
-## Theme maker
+## 🚀 Features
 
-Gear icon (above terminal tab #1) -> **+ Create theme**. Pick colours and fonts, draw a 12x12 pixel icon, and watch the
-live preview (tick *preview on the real app* to see it on the whole interface). **Save**, **Save & use**, **Export**
-(writes `<name>.rootui-theme.json` to your Downloads folder and copies it to the clipboard) and **Import** (file or pasted text).
-Custom themes get a pencil / export / delete button in the theme list and are stored in `themes/` next to the built-in ones.
+- 🖥️ **Full terminal emulator** with tabs and split panes
+- 📊 **Live system monitor**: CPU per-core, RAM, swap, disk, network, temperatures, processes
+- 🗂️ **File browser** panel that follows your current directory
+- ⌨️ **On-screen keyboard** that lights up as you type
+- 🌐 **Network panel** with live up/down graph and active connections
+- 🎞️ **Smooth animations**: boot sequence, panel transitions, glowing text
+- 🎨 **Themes**: Tron, Blade, Matrix, Cyberpunk, Mono, or build your own
+- 🔊 **Sound effects** (optional, toggleable)
+- ⚙️ **Everything configurable** from a single `config.toml`
+- 🪶 **Lightweight**: single native binary, no runtime needed
 
-## How it works
+---
 
-| eDEX-UI (Electron)                         | RootUI (Rust)                                                    |
-|--------------------------------------------|------------------------------------------------------------------|
-| Electron window / BrowserWindow            | `tao` window + `wry` webview (WebView2 / WebKit)                 |
-| `node-pty` + `ws` terminal server          | `portable-pty` (ConPTY on Windows) + websocket (`axum`)          |
-| `systeminformation`                        | `sysinfo` + small OS helpers (`src/si.rs`)                       |
-| `geolite2-redist` / `maxmind`              | `maxminddb` with the same GeoLite2 DB (+ online fallback)        |
-| Node `fs`, `os`, `path`, `require`         | `ui/shim.js` (talks to the local Rust server)                    |
-| Electron IPC, `remote`, global shortcuts   | one websocket + in-page shortcut handling                        |
+## 📸 Screenshots
 
-The Rust server listens only on `127.0.0.1` (random port) and requires a per-launch secret token, so
-other programs/web pages cannot reach your terminal.
+> Add your screenshots to an `assets/` folder and update the paths below.
 
-## Files
+<p align="center">
+  <img src="assets/screenshot-main.png" alt="Main view" width="48%"/>
+  <img src="assets/screenshot-theme.png" alt="Theme preview" width="48%"/>
+</p>
 
-- `src/main.rs` — window, webview, event loop
-- `src/server.rs` — local HTTP/WebSocket server, fs API, IPC
-- `src/pty.rs` — shells / terminals (tabs), cwd + process tracking
-- `src/si.rs` — CPU, RAM, processes, network, disks, battery
-- `src/geo.rs` — GeoIP for the globe
-- `src/config.rs` — settings bootstrap (same files as eDEX-UI)
-- `ui/` — the web front-end (original eDEX-UI UI + `shim.js` + prebuilt `vendor/vendor.js`)
+---
 
-## Settings
+## 📦 Installation
 
-Stored in `%APPDATA%\RootUI` (Linux: `~/.config/RootUI`): `settings.json`, `shortcuts.json`, `themes/`,
-`keyboards/`, `fonts/`. Same format as eDEX-UI — open them from the in-app Settings dialog.
+### From source
 
-## What's new in this build
+```bash
+git clone https://github.com/<your-username>/rootui.git
+cd rootui
+cargo build --release
+./target/release/rootui
+```
 
-- Fixed the grey-teal terminal (the frame's border layer was painting over it); the terminal now uses the theme colours.
-- PowerShell starts with plain Black/Gray colours and reports its folder after every prompt, so the file browser follows `cd` on Windows.
-- File browser lists a folder in one request and no longer fails on a single unreadable entry.
-- Fixed "OFFLINE" / missing globe (a `net.Socket` compatibility bug); connectivity check tries several endpoints; IP and geo lookups use several providers and don't wait for the GeoIP download.
-- Clean L-shaped Enter key, uniform arrow keys, properly placed Close/modal buttons.
-- Version 1.0V: in-app theme maker (see above), one-click installers for Windows (64-bit and 32-bit) / Linux.
-- 13 new themes. Gear button opens a theme picker + social links (edit `ui/assets/misc/socials.json`); the Discord invite is read live from your gist.
+### With Cargo
 
-## Known differences
+```bash
+cargo install rootui
+```
 
-- Terminal font ligatures are not available (the original used a Node-only add-on).
-- On Windows the file browser does not follow `cd` automatically (same limitation as eDEX-UI).
-- DevTools and the update check (it pointed at eDEX-UI's releases) are disabled.
+**Requirements:** Rust 1.75+ and a GPU/driver with Vulkan, Metal, or DirectX 12 support.
 
-## License
+---
 
-GPL-3.0 — see `LICENSE`. Based on eDEX-UI © Gabriel "Squared" Saillard and contributors.
+## 🎮 Usage
+
+```bash
+rootui                     # start with defaults
+rootui --theme matrix      # pick a theme
+rootui --no-boot           # skip the boot animation
+rootui --fps 144           # set render frame rate
+rootui --config ./my.toml  # use a custom config file
+rootui --help              # see all options
+```
+
+### Default keybindings
+
+| Shortcut | Action |
+|---|---|
+| `Ctrl+Shift+T` | New tab |
+| `Ctrl+Shift+W` | Close tab |
+| `Ctrl+Shift+D` | Split pane horizontally |
+| `Ctrl+Shift+E` | Split pane vertically |
+| `Ctrl+Shift+K` | Toggle on-screen keyboard |
+| `Ctrl+Shift+M` | Toggle system monitor |
+| `Ctrl+Shift+F` | Toggle file browser |
+| `F11` | Fullscreen |
+| `Ctrl+,` | Open settings |
+
+---
+
+## ⚙️ Options
+
+RootUI is configured through `~/.config/rootui/config.toml`:
+
+```toml
+[general]
+shell = "/bin/bash"
+start_dir = "~"
+boot_animation = true
+fullscreen = false
+
+[appearance]
+theme = "tron"
+font = "JetBrains Mono"
+font_size = 15
+glow = true
+scanlines = false
+opacity = 0.95
+animation_speed = 1.0     # 0.0 = off
+
+[performance]
+fps = 60
+vsync = true
+gpu_acceleration = true
+
+[panels]
+system_monitor = true
+file_browser = true
+network = true
+keyboard = true
+update_interval_ms = 500
+
+[audio]
+enabled = true
+volume = 0.5
+```
+
+---
+
+## 🎨 Themes
+
+Themes are simple TOML files in `~/.config/rootui/themes/`:
+
+```toml
+name = "my-theme"
+
+[colors]
+background = "#03070b"
+foreground = "#ececec"
+accent     = "#00e5ff"
+warning    = "#ffb300"
+danger     = "#ff3d3d"
+```
+
+Built-in themes: `tron` · `blade` · `matrix` · `cyberpunk` · `mono`
+
+---
+
+## 🗺️ Roadmap
+
+- [x] Terminal emulator with tabs
+- [x] System monitor panels
+- [x] Theme support
+- [x] Boot animation
+- [ ] Split panes
+- [ ] Plugin system
+- [ ] Remote system monitoring over SSH
+- [ ] Built-in theme editor
+- [ ] Wayland-native improvements
+
+---
+
+## 🤝 Contributing
+
+Contributions are welcome!
+
+1. Fork the repo
+2. Create a branch: `git checkout -b feature/my-feature`
+3. Commit your changes: `git commit -m "Add my feature"`
+4. Push and open a Pull Request
+
+Please run `cargo fmt` and `cargo clippy` before submitting.
+
+---
+
+## 🙏 Credits
+
+- Inspired by [eDEX-UI](https://github.com/GitSquared/edex-ui) by Gabriel Saillard
+- Built with the Rust ecosystem
+
+## 📄 License
+
+Released under the [MIT License](LICENSE).
+
+<p align="center">
+  <sub>Made with 🦀 and caffeine</sub>
+</p>

@@ -1,54 +1,64 @@
 <p align="center">
-  <img src="banner.svg" alt="RootUI banner" width="100%"/>
+  <img src="banner.png" alt="RootUI" width="100%"/>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/language-Rust-orange?style=for-the-badge&logo=rust" alt="Rust"/>
-  <img src="https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-00e5ff?style=for-the-badge" alt="Platforms"/>
-  <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge" alt="License"/>
-  <img src="https://img.shields.io/badge/status-active-brightgreen?style=for-the-badge" alt="Status"/>
+  <img src="https://img.shields.io/badge/language-Rust-111111?style=for-the-badge&logo=rust&logoColor=white" alt="Rust"/>
+  <img src="https://img.shields.io/badge/platform-Linux%20%7C%20Windows%20%7C%20macOS-444444?style=for-the-badge" alt="Platforms"/>
+  <img src="https://img.shields.io/badge/license-MIT-222222?style=for-the-badge" alt="License"/>
+  <img src="https://img.shields.io/badge/status-active-111111?style=for-the-badge" alt="Status"/>
 </p>
 
 <p align="center">
-  <b>RootUI</b> is a sci-fi terminal emulator and system dashboard inspired by <a href="https://github.com/GitSquared/edex-ui">eDEX-UI</a>,<br/>
-  rebuilt from scratch in <b>Rust</b> — no Electron, no bloat, just smooth.
+  <b>RootUI</b> is a sci-fi terminal emulator and system dashboard, inspired by
+  <a href="https://github.com/GitSquared/edex-ui">eDEX-UI</a>.<br/>
+  Rebuilt from scratch in <b>Rust</b>: no Electron, no bloat, just smooth.
 </p>
 
 ---
 
-## ✨ Why RootUI?
+## Credit
 
-eDEX-UI looks amazing, but it runs on Electron: heavy on RAM, slow to start, and no longer maintained. RootUI keeps the look and feel and swaps the engine.
+RootUI would not exist without **[eDEX-UI](https://github.com/GitSquared/edex-ui)**, created by **Gabriel Saillard ([GitSquared](https://github.com/GitSquared))**.
+The look, the layout and the whole idea of a cinematic, sci-fi terminal come from his work.
+RootUI is an independent Rust reimplementation of that concept, and is not affiliated with or endorsed by the eDEX-UI project.
+If you like this, go star the original.
+
+---
+
+## Why RootUI?
+
+eDEX-UI is built on Electron. RootUI keeps the same spirit and swaps the engine for native Rust.
 
 | | eDEX-UI | **RootUI** |
 |---|---|---|
 | Language | JavaScript / Electron | **Rust** |
-| Startup | Slow | **Near-instant** |
-| Memory use | High | **Low** |
+| Startup | Slower | **Near-instant** |
+| Memory use | Higher | **Low** |
 | Rendering | DOM / Chromium | **GPU-accelerated** |
 | Animations | Can stutter | **Smooth, frame-paced** |
 | Customization | Limited | **Extensive options** |
 
 ---
 
-## 🚀 Features
+## Features
 
-- 🖥️ **Full terminal emulator** with tabs and split panes
-- 📊 **Live system monitor**: CPU per-core, RAM, swap, disk, network, temperatures, processes
-- 🗂️ **File browser** panel that follows your current directory
-- ⌨️ **On-screen keyboard** that lights up as you type
-- 🌐 **Network panel** with live up/down graph and active connections
-- 🎞️ **Smooth animations**: boot sequence, panel transitions, glowing text
-- 🎨 **Themes**: Tron, Blade, Matrix, Cyberpunk, Mono, or build your own
-- 🔊 **Sound effects** (optional, toggleable)
-- ⚙️ **Everything configurable** from a single `config.toml`
-- 🪶 **Lightweight**: single native binary, no runtime needed
+- **Full terminal emulator** with tabs and split panes
+- **Live system monitor**: per-core CPU, RAM, swap, disk, network, temperatures, processes
+- **File browser** panel that follows your current directory
+- **On-screen keyboard** that lights up as you type
+- **Network panel** with a live up/down graph and active connections
+- **Smooth animations**: boot sequence, panel transitions, glowing text
+- **Themes**: Mono, Tron, Blade, Matrix, Cyberpunk, or build your own
+- **Sound effects** (optional, toggleable)
+- **Fully configurable** from a single `config.toml`
+- **Lightweight**: one native binary, no runtime needed
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
-> Add your screenshots to an `assets/` folder and update the paths below.
+Add your screenshots to an `assets/` folder and update the paths below.
 
 <p align="center">
   <img src="assets/screenshot-main.png" alt="Main view" width="48%"/>
@@ -57,7 +67,7 @@ eDEX-UI looks amazing, but it runs on Electron: heavy on RAM, slow to start, and
 
 ---
 
-## 📦 Installation
+## Installation
 
 ### From source
 
@@ -78,11 +88,11 @@ cargo install rootui
 
 ---
 
-## 🎮 Usage
+## Usage
 
 ```bash
 rootui                     # start with defaults
-rootui --theme matrix      # pick a theme
+rootui --theme mono        # pick a theme
 rootui --no-boot           # skip the boot animation
 rootui --fps 144           # set render frame rate
 rootui --config ./my.toml  # use a custom config file
@@ -105,7 +115,7 @@ rootui --help              # see all options
 
 ---
 
-## ⚙️ Options
+## Options
 
 RootUI is configured through `~/.config/rootui/config.toml`:
 
@@ -117,11 +127,11 @@ boot_animation = true
 fullscreen = false
 
 [appearance]
-theme = "tron"
+theme = "mono"
 font = "JetBrains Mono"
 font_size = 15
 glow = true
-scanlines = false
+scanlines = true
 opacity = 0.95
 animation_speed = 1.0     # 0.0 = off
 
@@ -144,7 +154,7 @@ volume = 0.5
 
 ---
 
-## 🎨 Themes
+## Themes
 
 Themes are simple TOML files in `~/.config/rootui/themes/`:
 
@@ -152,18 +162,18 @@ Themes are simple TOML files in `~/.config/rootui/themes/`:
 name = "my-theme"
 
 [colors]
-background = "#03070b"
+background = "#0a0a0a"
 foreground = "#ececec"
-accent     = "#00e5ff"
-warning    = "#ffb300"
+accent     = "#ececec"
+secondary  = "#8a8a8a"
 danger     = "#ff3d3d"
 ```
 
-Built-in themes: `tron` · `blade` · `matrix` · `cyberpunk` · `mono`
+Built-in themes: `mono` / `tron` / `blade` / `matrix` / `cyberpunk`
 
 ---
 
-## 🗺️ Roadmap
+## Roadmap
 
 - [x] Terminal emulator with tabs
 - [x] System monitor panels
@@ -177,9 +187,9 @@ Built-in themes: `tron` · `blade` · `matrix` · `cyberpunk` · `mono`
 
 ---
 
-## 🤝 Contributing
+## Contributing
 
-Contributions are welcome!
+Contributions are welcome.
 
 1. Fork the repo
 2. Create a branch: `git checkout -b feature/my-feature`
@@ -190,15 +200,11 @@ Please run `cargo fmt` and `cargo clippy` before submitting.
 
 ---
 
-## 🙏 Credits
+## Acknowledgements
 
-- Inspired by [eDEX-UI](https://github.com/GitSquared/edex-ui) by Gabriel Saillard
-- Built with the Rust ecosystem
+- [eDEX-UI](https://github.com/GitSquared/edex-ui) by Gabriel Saillard (GitSquared), the project that inspired RootUI
+- The Rust open-source ecosystem
 
-## 📄 License
+## License
 
 Released under the [MIT License](LICENSE).
-
-<p align="center">
-  <sub>Made with 🦀 and caffeine</sub>
-</p>
